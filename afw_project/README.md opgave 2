@@ -1,0 +1,130 @@
+README.md 
+OLA 5 – Anti Food Waste Data Collection System
+
+Dette repository indeholder implementeringen af en fuldautomatisk dataindsamlingspipeline, som henter madspildstilbud fra Salling Groups Food Waste API, lagrer dem i en MySQL-database, og kører dagligt via Windows Task Scheduler på en AWS EC2-instans.
+
+Projektets formål
+
+Formålet er at:
+
+Opstille en cloud-baseret arkitektur til systematisk dataindsamling
+
+Hente tilbud fra fire postnumre (2300, 2200, 2100, 2000)
+
+Opdele data i stamdata (stores, products) og variable data (offers)
+
+Logge alle kørsler
+
+Automatisere hele processen
+
+Dokumentere, at API-data eksisterer i virkeligheden
+
+Projektstruktur
+Afw_project/
+│
+├── logs/
+│   ├── afw_collect.log
+│   ├── debug_test.txt
+│   └── test_run.log
+│
+├── scripts/
+│   ├── afw_collect.R
+│   ├── afw_collect_v2.R
+│   └── test_db.R
+│
+└── ER-diagram.png (hvis inkluderet)
+
+Teknologistak
+
+AWS EC2 Windows Server
+
+R + Rscript
+
+httr, jsonlite, DBI, RMySQL
+
+MySQL 8.0
+
+Windows Task Scheduler
+
+Salling Group Food Waste API
+
+API-adgang
+
+API-nøglen hentes via:
+
+https://developer.sallinggroup.com
+
+Scriptet bruger Authorization-headeren:
+
+headers = c("Authorization" = API_KEY)
+
+Scripts
+afw_collect_v2.R
+
+Hovedscriptet:
+
+Henter data fra 4 postnumre
+
+Parser JSON
+
+Opdaterer stores og products (stamdata)
+
+Indsætter offers
+
+Logger alle processer
+
+test_db.R
+
+Tester MySQL-forbindelse og viser tabelnavne.
+
+afw_collect.R
+
+Tidligere version — bevaret til dokumentation.
+
+MySQL-database
+
+Tre tabeller:
+
+stores (stamdata)
+
+products (stamdata)
+
+offers (variable data, inkl. observed_at)
+
+Relationer er dokumenteret i ER-diagrammet.
+
+Automatisering
+
+Proces kører én gang dagligt via Windows Task Scheduler:
+
+Kalder Rscript.exe
+
+Kører afw_collect_v2.R
+
+Logger status i afw_collect.log
+
+Overholdt kravet: min. 2 kørsler med 24-timers interval
+
+Logging
+
+Alle kørsler logges i:
+
+logs/afw_collect.log
+
+
+Loggen viser:
+
+Tidsstempler
+
+HTTP-status
+
+Antal tilbud hentet
+
+Indsatte/ignorerede rækker
+
+Eventuelle fejl
+
+Validitetstest
+
+En tilbudsregistrering fra API'et blev verificeret fysisk i butik
+(Eksempel: Netto Kirkegårdsvej, mørbrad-tilbud).
