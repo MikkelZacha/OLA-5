@@ -6,7 +6,7 @@ library(DBI)
 library(RMySQL)
 
 # Din API key - HUSK Bearer foran
-api_key <- "Bearer SG_APIM_616QEBX83TYEECB5XRTWH5G5GRXRV949BWG54HBKAJTK6FHJ1VW0"
+api_key <- "Bearer "HER ER INDSAT SALLING API"
 
 # Logfil
 log_file <- "C:/afw_project/logs/afw_collect.log"
@@ -63,7 +63,7 @@ for (zipcode in zipcodes) {
     con <- dbConnect(
       RMySQL::MySQL(),
       user = "root",
-      password = "Tfx58kzd.EK.Stud.dk",   # <- brug dit korrekte password
+      password = "KODEKODEKODEKODE",   # <- brug dit korrekte password
       host = "127.0.0.1",
       dbname = "salling_afw",
       port = 3306
@@ -206,4 +206,5 @@ for (zipcode in zipcodes) {
   dbDisconnect(con)
   log_msg(paste("Færdig med postnummer:", zipcode))
 }  # <-- afslutning på zipcode-loopet
+
 
